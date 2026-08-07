@@ -113,12 +113,12 @@ RHELAIVLLMParameters = {
 WatsonxParameters = {
     ProviderParameter(GenParams.DECODING_METHOD, str),
     ProviderParameter(GenParams.MIN_NEW_TOKENS, int),
-    ProviderParameter(GenParams.MAX_NEW_TOKENS, int),
     ProviderParameter(GenParams.RANDOM_SEED, int),
     ProviderParameter(GenParams.TOP_K, int),
     ProviderParameter(GenParams.TOP_P, float),
     ProviderParameter(GenParams.TEMPERATURE, float),
     ProviderParameter(GenParams.REPETITION_PENALTY, float),
+    ProviderParameter("max_completion_tokens", int),
 }
 
 FakeProviderParameters = {
@@ -200,7 +200,7 @@ RHOAIVLLMParametersMapping: dict[str, str] = {
 # Generic to Watsonx parameters mapping
 WatsonxParametersMapping: dict[str, str] = {
     GenericLLMParameters.MIN_TOKENS_FOR_RESPONSE: GenParams.MIN_NEW_TOKENS,
-    GenericLLMParameters.MAX_TOKENS_FOR_RESPONSE: GenParams.MAX_NEW_TOKENS,
+    GenericLLMParameters.MAX_TOKENS_FOR_RESPONSE: "max_completion_tokens",
     GenericLLMParameters.TOP_K: GenParams.TOP_K,
     GenericLLMParameters.TOP_P: GenParams.TOP_P,
     GenericLLMParameters.TEMPERATURE: GenParams.TEMPERATURE,

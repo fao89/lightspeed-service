@@ -118,7 +118,7 @@ def test_params_handling(provider_config):
         "unknown_parameter": "foo",
         "verbose": True,
         "min_new_tokens": 1,
-        "max_new_tokens": 10,
+        "max_completion_tokens": 10,
         "temperature": 0.3,
     }
 
@@ -140,8 +140,8 @@ def test_params_handling(provider_config):
         assert GenParams.DECODING_METHOD in watsonx.params
         assert watsonx.params[GenParams.DECODING_METHOD] == "sample"
 
-        assert GenParams.MAX_NEW_TOKENS in watsonx.params
-        assert watsonx.params[GenParams.MAX_NEW_TOKENS] == 10
+        assert "max_completion_tokens" in watsonx.params
+        assert watsonx.params["max_completion_tokens"] == 10
 
         # unknown parameters should be filtered out
         assert "unknown_parameter" not in watsonx.params
@@ -194,7 +194,7 @@ def test_params_handling_none_values(provider_config):
         "temperature": None,
         "verbose": None,
         "min_new_tokens": None,
-        "max_new_tokens": None,
+        "max_completion_tokens": None,
     }
 
     with patch("ols.src.llms.providers.watsonx.ChatWatsonx", new=ChatWatsonx()):
@@ -210,8 +210,8 @@ def test_params_handling_none_values(provider_config):
         assert GenParams.MIN_NEW_TOKENS in watsonx.params
         assert watsonx.params[GenParams.MIN_NEW_TOKENS] is None
 
-        assert GenParams.MAX_NEW_TOKENS in watsonx.params
-        assert watsonx.params[GenParams.MAX_NEW_TOKENS] is None
+        assert "max_completion_tokens" in watsonx.params
+        assert watsonx.params["max_completion_tokens"] is None
 
         assert GenParams.TEMPERATURE in watsonx.params
         assert watsonx.params[GenParams.TEMPERATURE] is None
@@ -271,12 +271,12 @@ def test_generic_parameter_mappings(provider_config):
 
         # generic parameters should be remapped to Watsonx-specific parameters
         assert GenParams.MIN_NEW_TOKENS in watsonx.params
-        assert GenParams.MAX_NEW_TOKENS in watsonx.params
+        assert "max_completion_tokens" in watsonx.params
         assert GenParams.TOP_K in watsonx.params
         assert GenParams.TOP_P in watsonx.params
         assert GenParams.TEMPERATURE in watsonx.params
         assert watsonx.params[GenParams.MIN_NEW_TOKENS] == 100
-        assert watsonx.params[GenParams.MAX_NEW_TOKENS] == 200
+        assert watsonx.params["max_completion_tokens"] == 200
         assert watsonx.params[GenParams.TOP_K] == 10
         assert watsonx.params[GenParams.TOP_P] == 1.5
         assert watsonx.params[GenParams.TEMPERATURE] == 42.0
